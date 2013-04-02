@@ -5,6 +5,7 @@
 
 (defn unit
   "Returns the value in a collection if it only contains one item."
+  {:added "1.0"}
   [coll]
   (when-let [coll (seq coll)]
     (when-not (next coll)
