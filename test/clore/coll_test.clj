@@ -2,6 +2,13 @@
   (:use clojure.test clore.coll))
 
 
+(deftest unit-test
+  (is (= 1 (unit [1])))
+  (is (= nil (unit [1 2])))
+  (is (= nil (unit [nil])))
+  (is (= nil (unit [])))
+  (is (= nil (unit nil))))
+
 (deftest any?-test
   (are [x] (true? x)
        (any? #(= 1 %) [1 true false nil])

@@ -3,6 +3,13 @@
   clore.coll)
 
 
+(defn unit
+  "Returns the value in a collection if it only contains one item."
+  [coll]
+  (when-let [coll (seq coll)]
+    (when-not (next coll)
+      (first coll))))
+
 (defn any?
   "Returns a boolean if any value in coll satisfies pred."
   {:added "1.0"}
