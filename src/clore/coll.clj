@@ -14,18 +14,18 @@
   "Returns a boolean if any value in coll satisfies pred."
   {:added "1.0"}
   [pred coll]
-    (boolean (some pred coll)))
+  (boolean (some pred coll)))
 
 (defn any-true?
   "Returns a boolean if any value in coll is logically true."
   {:added "1.0"}
   [coll]
-    (boolean (some identity coll)))
+  (boolean (some identity coll)))
 
 (defn- gapmap-internal
   [f x coll]
-    (if-let [y (first coll)]
-      (cons (f x y) (gapmap-internal f y (next coll)))))
+  (if-let [y (first coll)]
+    (cons (f x y) (gapmap-internal f y (next coll)))))
 
 (defn gapmap
   "Returns a lazy sequence consisting of the result of applying f to all
