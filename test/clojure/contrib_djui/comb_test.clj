@@ -1,5 +1,6 @@
-(ns clore.comb-test
-  (:use clojure.test clore.comb))
+(ns clojure.contrib-djui.comb-test
+  (:use clojure.test)
+  (:use clojure.contrib-djui.comb))
 
 
 (deftest |>-test

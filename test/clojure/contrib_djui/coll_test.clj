@@ -1,5 +1,6 @@
-(ns clore.coll-test
-  (:use clojure.test clore.coll))
+(ns clojure.contrib-djui.coll-test
+  (:use clojure.test)
+  (:use clojure.contrib-djui.coll))
 
 
 (deftest unit-test

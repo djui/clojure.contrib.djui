@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Collection helper functions."}
-  clore.coll)
+  clojure.contrib-djui.coll)
 
 
 (defn unit

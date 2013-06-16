@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Combinator helper functions."}
-  clore.comb)
+  clojure.contrib-djui.comb)
 
 
 (defn |>
