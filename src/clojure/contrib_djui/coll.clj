@@ -5,16 +5,19 @@
 
 (defn gapmap
   "Returns a lazy sequence consisting of the result of applying f to all
-  adjacent values of coll. f should be a function of 2 arguments. If coll
+  adjacent values of coll. f should be a function taking 2 arguments. If coll
   contains less than 2 items, it is returned and f is not called."
   {:added "1.0"}
-  ([f coll]
-     (if-let [r (next coll)] ; at least two items?
-       (letfn [(gmap [f x coll]
-                 (if-let [y (first coll)]
-                   (cons (f x y) (gmap f y (next coll)))))]
-         (lazy-seq (gmap f (first coll) r)))
-       coll)))
+  [f coll]
+  (if (< (count coll) 2) coll
+      (->> coll (partition 2 1) (map (fn [[x y]] (f x y))))))
+
+(defmacro create-map
+  "Return a map with a list of variable's name as keys and the variable's
+  values as value."
+  {:added "1.4"}
+  [& vars]
+  (zipmap (map keyword vars) vars))
 
 (defn unit
   "Returns the value in a collection if it only contains one item."
