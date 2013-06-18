@@ -5,5 +5,4 @@
             :distribution :repo}
   :url "https://github.com/djui/clojure.contrib-djui"
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [egamble/let-else "1.0.5"]
-                 [useful "0.8.8"]])
+                 [egamble/let-else "1.0.5"]]) ;; Not a real dependency but very useful
