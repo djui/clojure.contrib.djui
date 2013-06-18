@@ -3,6 +3,8 @@
   clojure.contrib-djui.coll)
 
 
+;;; Maps
+
 (defn gapmap
   "Returns a lazy sequence consisting of the result of applying f to all
   adjacent values of coll. f should be a function taking 2 arguments. If coll
@@ -18,6 +20,9 @@
   {:added "1.4"}
   [& vars]
   (zipmap (map keyword vars) vars))
+
+
+;;; Sequentials
 
 (defn unit
   "Returns the value in a collection if it only contains one item."
@@ -44,6 +49,14 @@
    :deprecated "1.4"}
   [coll]
   (boolean (some identity coll)))
+
+(defn alternate
+  "Return a list of lists containing the items coll modulo n."
+  {:added "1.4"}
+  [n coll]
+  (let [x (partition n coll)]
+    (if (empty? x) x
+        (apply map vector x))))
 
 (defn |>
   "Piping/Thrushing, similar to F#'s or OCaml |>, or Haskells $.
