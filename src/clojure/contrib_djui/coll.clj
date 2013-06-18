@@ -28,14 +28,20 @@
       (first coll))))
 
 (defn any?
-  "Returns a boolean if any value in coll satisfies pred."
+  "Returns a boolean representing if any value in coll is true. If pred is
+  given, return if any value in coll satisfies pred."
   {:added "1.0"}
-  [pred coll]
-  (boolean (some pred coll)))
+  ([coll]
+     (any? identity coll))
+  ([pred coll]
+     (boolean (some pred coll))))
 
 (defn any-true?
-  "Returns a boolean if any value in coll is logically true."
-  {:added "1.0"}
+  "Returns a boolean if any value in coll is logically true.
+
+  Deprecated: Use (any? coll)."
+  {:added "1.0"
+   :deprecated "1.4"}
   [coll]
   (boolean (some identity coll)))
 
