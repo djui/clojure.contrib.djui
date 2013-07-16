@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Core helper functions."}
-  clojure.contrib-djui.core
+  clojure.contrib.djui.core
   (:use [let-else :only [let?]]))
 
 

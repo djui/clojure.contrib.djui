@@ -1,6 +1,6 @@
-(ns clojure.contrib-djui.math-test
+(ns clojure.contrib.djui.math-test
   (:use clojure.test)
-  (:use clojure.contrib-djui.math))
+  (:use clojure.contrib.djui.math))
 
 
 (deftest digits-test

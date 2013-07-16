@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Nilable (Nullable) helper functions."}
-  clojure.contrib-djui.nilable)
+  clojure.contrib.djui.nilable)
 
 (defmacro coalesce
   "Returns nil if all of its arguments are nil, otherwise it returns the first

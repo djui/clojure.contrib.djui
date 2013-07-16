@@ -1,6 +1,6 @@
-(ns clojure.contrib-djui.str-test
+(ns clojure.contrib.djui.str-test
   (:use clojure.test)
-  (:use clojure.contrib-djui.str))
+  (:use clojure.contrib.djui.str))
 
 
 (deftest safe-parse-test

@@ -1,6 +1,6 @@
-(ns clojure.contrib-djui.core-test
+(ns clojure.contrib.djui.core-test
   (:use clojure.test)
-  (:use clojure.contrib-djui.core))
+  (:use clojure.contrib.djui.core))
 
 (deftest fixpoint-test
   (is (= 10 (fixpoint #(if (= % 10) % (inc %)) 0))))

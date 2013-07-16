@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Time helper functions."}
-  clojure.contrib-djui.time)
+  clojure.contrib.djui.time)
 
 
 (defn bench

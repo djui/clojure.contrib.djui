@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Collection helper functions."}
-  clojure.contrib-djui.coll)
+  clojure.contrib.djui.coll)
 
 
 ;;; Maps

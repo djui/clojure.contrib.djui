@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Math helper functions."}
-  clojure.contrib-djui.math)
+  clojure.contrib.djui.math)
 
 
 (defn digits

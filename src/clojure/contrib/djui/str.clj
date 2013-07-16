@@ -1,6 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "String helper functions."}
-  clojure.contrib-djui.str)
+  clojure.contrib.djui.str)
 
 
 (defn safe-parse
