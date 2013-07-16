@@ -1,9 +1,19 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Core helper functions."}
   clojure.contrib-djui.core
-  (:use [clojure.contrib-djui.coll :only [alternate]])
   (:use [let-else :only [let?]]))
 
+
+;; Courtesy https://github.com/clojure/clojure/blob/master/src/clj/clojure/core.clj
+(defmacro assert-args
+  {:added "1.4"}
+  [& pairs]
+  `(do (when-not ~(first pairs)
+         (throw (IllegalArgumentException.
+                 (str (first ~'&form) " requires " ~(second pairs) " in " ~'*ns* ":" (:line (meta ~'&form))))))
+       ~(let [more (nnext pairs)]
+          (when more
+            (list* `assert-args more)))))
 
 (defn fixpoint
   "Repeatedly call f with data-in until f(data-in) equals data-in."
@@ -13,6 +23,12 @@
     (if (= data-out data-in)
       data-out ;; Don't return data-in in case meta data was added.
       (recur f data-out))))
+
+(defn fargs
+  "Return a function that takes a fn f yielding (apply f args). While partial is
+  left-associative, fargs is right-associative."
+  {:added "1.5"} [& args]
+  (fn [f] (apply f args)))
 
 (defn keep-if
   "Verify that (pre x) is true and return x, otherwise nil. If f is given,
@@ -28,17 +44,6 @@
   ([x pre f] (when (pre x) (f x)))
   ([x pre f post] (when (pre x) (keep-if (f x) post))))
 
-(defmacro ^{:private true} assert-args
-  {:added "1.4"}
-  [& pairs]
-  `(do (when-not ~(first pairs)
-         (throw (IllegalArgumentException.
-                 (str (first ~'&form) " requires " ~(second pairs) " in " ~'*ns* ":" (:line (meta ~'&form))))))
-       ~(let [more (nnext pairs)]
-          (when more
-            (list* `assert-args more)))))
-
-;; Courtesy https://github.com/clojure/clojure/blob/master/src/clj/clojure/core.clj
 ;; Courtesy https://github.com/cgrand/parsley/blob/master/src/net/cgrand/parsley/util.clj
 ;; Courtesy http://edtsech.github.io/2012/12/and-let.html
 (defmacro if-all-let
@@ -97,10 +102,14 @@
      (println (combine b c)))"
   {:added "1.4"}
   [test bindings & forms]
-  (let [[names thens elses] (alternate 3 bindings)]
-    `(if ~test
-       (let [~@(interleave names thens)] ~@forms)
-       (let [~@(interleave names elses)] ~@forms))))
+  (letfn [(alternate [n coll]
+            (let [x (partition n coll)]
+              (if (empty? x) x
+                  (apply map vector x))))]
+    (let [[names thens elses] (alternate 3 bindings)]
+      `(if ~test
+         (let [~@(interleave names thens)] ~@forms)
+         (let [~@(interleave names elses)] ~@forms)))))
 
 ;; Courtesy https://github.com/flatland/useful/blob/develop/src/flatland/useful/seq.clj
 (defmacro lazy
@@ -116,3 +125,8 @@
   {:added "1.4"}
   [& exprs]
   `(try ~@exprs (catch Exception _#)))
+
+(defmacro unless
+  "Same as if, but with negated predicate check."
+  [test body]
+  `(if (not ~test) ~body))

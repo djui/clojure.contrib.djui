@@ -21,13 +21,51 @@
   [& vars]
   (zipmap (map keyword vars) vars))
 
+(defn pmapcat
+  "Like mapcat but with parallelized map."
+  {:added "1.5"}
+  [f & colls]
+  (apply concat (apply pmap f colls)))
+
+(defn sort-maps-by
+  "Sort a collection of maps on multiple keys. Items with a missing key have
+  precedence.
+
+  Example:
+  (sort-maps-by [{:a 2 :b 2} {:a 1} {:a 2 :b 1}] :a :b)
+    => [{:a 1 :b 2} {:a 2 :b 1} {:a 2 :b 2}]"
+  {:added "1.5"}
+  [coll & ks]
+  (sort-by (apply juxt ks) coll))
+
+(defn distinct-by
+  "Like distinct, but using ident as the identity function for elements.
+
+  Example:
+  (distinct-by :b [{:a 2, :b 7} {:a 3, :b 7} {:a 4, :b 8}])
+    => [{:a 2, :b 7} {:a 4, :b 8}])
+  (distinct-by second [[:a 2] [:b 2] [:b 3]])
+    => [[:a 2] [:b 3]]
+  (= (distinct-by identity [1 1 2 3 4 4 5]) (distinct [1 1 2 3 4 4 5]))
+    => true"
+  [ident coll]
+  (letfn [(lazy-step [xs seen]
+            (letfn [(step [[x :as xs] seen]
+                      (when-let [s (seq xs)]
+                        (let [f (ident x)]
+                          (if (contains? seen f)
+                            (recur (rest s) seen)
+                            (cons x (lazy-step (rest s) (conj seen f)))))))]
+              (lazy-seq (step xs seen))))]
+    (lazy-step coll #{})))
+
 
 ;;; Sequentials
 
 (defn unit
-  "Returns the value in a collection if it only contains one item."
-  {:added "1.0"}
-  [coll]
+  "Returns the value in a collection if it only contains one item; also know as
+  singleton."
+  {:added "1.0"} [coll]
   (when-let [coll (seq coll)]
     (when-not (next coll)
       (first coll))))
@@ -41,9 +79,22 @@
   ([pred coll]
      (boolean (some pred coll))))
 
+(defn tree-seq+
+  "Like tree-seq but, optionally, parallelized and with max. traversion limit."
+  {:added "1.5"}
+  [branch? children root & [{:keys [parallel? limit]
+                             :or {parallel? true, limit Double/POSITIVE_INFINITY}}]]
+  (let [mp (if parallel? pmapcat mapcat)]
+    (letfn [(walk [depth node]
+              (when (< depth limit)
+                (lazy-seq
+                  (cons node
+                    (when (branch? node)
+                      (mp (partial walk (inc depth)) (children node)))))))]
+      (walk 0 root))))
+
 (defn any-true?
   "Returns a boolean if any value in coll is logically true.
-
   Deprecated: Use (any? coll)."
   {:added "1.0"
    :deprecated "1.4"}
@@ -57,6 +108,11 @@
   (let [x (partition n coll)]
     (if (empty? x) x
         (apply map vector x))))
+
+(defn pjuxt
+  "Like juxt, but parallelized."
+  [& fns]
+  (fn [& args] (pmap #(apply % args) fns)))
 
 (defn |>
   "Piping/Thrushing, similar to F#'s or OCaml |>, or Haskells $.
