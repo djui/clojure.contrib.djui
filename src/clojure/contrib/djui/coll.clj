@@ -70,6 +70,12 @@
     (when-not (next coll)
       (first coll))))
 
+(defn sequential!
+  "Ensure x is sequential. If x is nil, nil is returned."
+  {:added "1.7"}
+  [x]
+  (if (or (nil? x) (sequential? x)) x (list x)))
+
 (defn any?
   "Returns a boolean representing if any value in coll is true. If pred is
   given, return if any value in coll satisfies pred."

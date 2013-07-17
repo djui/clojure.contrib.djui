@@ -18,6 +18,12 @@
   (is (nil?  (keep-if [1 2] (fn [x] (= 1 (count x))) first)))
   (is (nil?  (keep-if [1 2] (fn [x] (= 1 (count x))) first pos?))))
 
+(deftest verify-test
+  (is (= [1] (verify 1 vector? vector)))
+  (is (= [1] (verify [1] vector? vector)))
+  (is (= 2   (verify 1 even? inc)))
+  (is (= 2   (verify 2 even? inc))))
+
 (deftest if-all-let-test
   (is (= [2 1 true] (if-all-let [a 2, b (dec a), c (pos? b)] [a b c])))
   (is (= [2 1 true] (if-all-let [a 2, b (dec a), c (pos? b)] [a b c] "else")))

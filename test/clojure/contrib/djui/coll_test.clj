@@ -40,6 +40,18 @@
   (is (= nil (unit [])))
   (is (= nil (unit nil))))
 
+(deftest sequential!-test
+  (is (= nil (sequential! nil)))
+  (is (sequential? (sequential! 1)))
+  (is (sequential? (sequential! '())))
+  (is (sequential? (sequential! '(1))))
+  (is (sequential? (sequential! [])))
+  (is (sequential? (sequential! [1])))
+  (is (sequential? (sequential! {:foo "bar"})))
+  (is (sequential? (sequential! [{:foo "bar"}])))
+  (is (sequential? (sequential! #{1 2})))
+  (is (sequential? (sequential! [#{1 2}]))))
+
 (deftest any?-test
   (is (true?  (any? [true false nil])))
   (is (true?  (any? [1 false nil])))

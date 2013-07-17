@@ -27,7 +27,8 @@
 (defn fargs
   "Return a function that takes a fn f yielding (apply f args). While partial is
   left-associative, fargs is right-associative."
-  {:added "1.5"} [& args]
+  {:added "1.5"}
+  [& args]
   (fn [f] (apply f args)))
 
 (defn keep-if
@@ -36,13 +37,23 @@
   (f x), otherwise nil.
 
   Example:
-  (keep-if 5 even?) => 5
-  (keep-if 5 even? dec) => 4
-  (keep-if 5 even? dec even?) => nil"
+  (keep-if 5 even?) ;=> 5
+  (keep-if 5 even? dec) ;=> 4
+  (keep-if 5 even? dec even?) ;=> nil"
   {:added "1.4"}
   ([x pre] (when (pre x) x))
   ([x pre f] (when (pre x) (f x)))
   ([x pre f post] (when (pre x) (keep-if (f x) post))))
+
+(defn verify
+  "Verify that (test-f x) is true and return x, otherwise return (f x).
+
+  Example:
+  (verify 1 vector? vector) ;=> [1]
+  (verify [1] vector? vector) ;=> [1]"
+  {:added "1.7"}
+  [x test-f f]
+  (if (test-f x) x (f x)))
 
 ;; Courtesy https://github.com/cgrand/parsley/blob/master/src/net/cgrand/parsley/util.clj
 ;; Courtesy http://edtsech.github.io/2012/12/and-let.html
@@ -55,7 +66,7 @@
                  b (dec a)
                  c (pos? b)]
       [a b c]
-      \"failed\") => \"failed\""
+      \"failed\") ;=> \"failed\""
   {:added "1.4"}
   ([bindings then]
      `(if-all-let ~bindings ~then nil))
@@ -86,7 +97,7 @@
     (when-all-let [a 2
                    b (dec a)
                    c (pos? b)]
-      [a b c]) => [2 1 true]"
+      [a b c]) ;=> [2 1 true]"
   {:added "1.4"}
   [bindings & body]
   `(if-all-let ~bindings (do ~@body)))
@@ -128,5 +139,6 @@
 
 (defmacro unless
   "Same as if, but with negated predicate check."
+  {:added "1.5"}
   [test body]
   `(if (not ~test) ~body))
