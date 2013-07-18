@@ -59,6 +59,24 @@
               (lazy-seq (step xs seen))))]
     (lazy-step coll #{})))
 
+(defn deep-merge
+  "Like merge, but merges maps recursively. If vals are not maps, the last value
+  wins."
+  [& vals]
+  (if (every? map? vals)
+    (apply merge-with deep-merge vals)
+    (last vals)))
+
+(defn deep-merge-with
+  "Like merge-with, but merges maps recursively. If vals are not maps,
+  (apply f vals) determines the winner."
+  [f & vals]
+  (letfn [(m [& vals]
+            (when (some identity vals)
+              (if (every? map? vals)
+                (apply merge-with m vals)
+                (apply f vals))))]
+    (apply m vals)))
 
 ;;; Sequentials
 

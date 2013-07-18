@@ -33,6 +33,20 @@
   (is (= [[:a 2] [:b 3]] (distinct-by second [[:a 2] [:b 2] [:b 3]])))
   (is (= (distinct-by identity [1 1 2 3 4 4 5]) (distinct [1 1 2 3 4 4 5]))))
 
+(deftest deep-merge-test
+  (is (= nil (deep-merge nil nil nil)))
+  (is (= (merge {:a 1 :d 1} {:a 2 :c 1}) (deep-merge {:a 1 :d 1} {:a 2 :c 1})))
+  (is (= {:a {:aa 2 :bb 1 :cc 1} :b 2 :c 1 :d 1}
+         (deep-merge {:a {:aa 1 :bb 1} :b 1 :c 1}
+                     {:a {:aa 2 :cc 1} :b 2 :d 1}))))
+
+(deftest deep-merge-with-test
+  (is (= nil (deep-merge-with + nil nil nil)))
+  (is (= (merge-with + {:a 1 :d 1} {:a 2 :c 1}) (deep-merge-with + {:a 1 :d 1} {:a 2 :c 1})))
+  (is (= {:a {:aa 3 :bb 1 :cc 1} :b 3 :c 1 :d 1}
+         (deep-merge-with + {:a {:aa 1 :bb 1} :b 1 :c 1}
+                            {:a {:aa 2 :cc 1} :b 2 :d 1}))))
+
 (deftest unit-test
   (is (= 1   (unit [1])))
   (is (= nil (unit [1 2])))
