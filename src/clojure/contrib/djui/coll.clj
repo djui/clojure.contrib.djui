@@ -48,6 +48,7 @@
     => [[:a 2] [:b 3]]
   (= (distinct-by identity [1 1 2 3 4 4 5]) (distinct [1 1 2 3 4 4 5]))
     => true"
+  {:added "1.5"}
   [ident coll]
   (letfn [(lazy-step [xs seen]
             (letfn [(step [[x :as xs] seen]
@@ -62,6 +63,7 @@
 (defn deep-merge
   "Like merge, but merges maps recursively. If vals are not maps, the last value
   wins."
+  {:added "1.9"}
   [& vals]
   (if (every? map? vals)
     (apply merge-with deep-merge vals)
@@ -70,6 +72,7 @@
 (defn deep-merge-with
   "Like merge-with, but merges maps recursively. If vals are not maps,
   (apply f vals) determines the winner."
+  {:added "1.9"}
   [f & vals]
   (letfn [(m [& vals]
             (when (some identity vals)
@@ -83,7 +86,8 @@
 (defn unit
   "Returns the value in a collection if it only contains one item; also know as
   singleton."
-  {:added "1.0"} [coll]
+  {:added "1.0"}
+  [coll]
   (when-let [coll (seq coll)]
     (when-not (next coll)
       (first coll))))
