@@ -1,6 +1,6 @@
 (ns clojure.contrib.djui.coll-test
-  (:use clojure.test)
-  (:use clojure.contrib.djui.coll))
+  (:use clojure.contrib.djui.coll
+        clojure.test))
 
 
 (deftest gapmap-test

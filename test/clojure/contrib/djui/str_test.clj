@@ -1,6 +1,7 @@
 (ns clojure.contrib.djui.str-test
-  (:use clojure.test)
-  (:use clojure.contrib.djui.str))
+  (:require [clojure.contrib.djui.io :refer [tempfile]])
+  (:use clojure.contrib.djui.str
+        clojure.test))
 
 
 (deftest safe-parse-test

@@ -1,6 +1,6 @@
 (ns clojure.contrib.djui.nilable-test
-  (:use clojure.test)
-  (:use clojure.contrib.djui.nilable))
+  (:use clojure.contrib.djui.nilable
+        clojure.test))
 
 
 (deftest coalesce-test

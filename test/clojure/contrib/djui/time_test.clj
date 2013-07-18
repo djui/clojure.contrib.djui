@@ -1,5 +1,5 @@
 (ns clojure.contrib.djui.time-test
-  (:use clojure.test)
-  (:use clojure.contrib.djui.time))
+  (:use clojure.contrib.djui.time
+        clojure.test))
 
 #_(deftest bench-test ...)

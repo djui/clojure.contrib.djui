@@ -1,11 +1,13 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "String helper functions."}
-  (:require [clojure.edn] :as edn)
-  clojure.contrib.djui.str)
+  clojure.contrib.djui.str
+  (:require [clojure.edn :as edn]))
 
 
 (defn safe-parse
-  "Parse a clojure term without evaluating anything."
-  {:added "1.4"}
+  "Parse a clojure term without evaluating anything.
+  Deprecated: Use clojure.edn/read-string instead."
+  {:added "1.4"
+   :deprecated "2.0"}
   [str]
-  (clojure.edn/read-string str))
+  (edn/read-string str))
