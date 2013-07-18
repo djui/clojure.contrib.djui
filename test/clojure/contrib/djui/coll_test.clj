@@ -40,8 +40,44 @@
   (is (= nil (unit [])))
   (is (= nil (unit nil))))
 
+(deftest to-vector-test
+  (is (= nil   (to-vector nil)))
+  (is (vector? (to-vector 1)))
+  (is (vector? (to-vector '())))
+  (is (vector? (to-vector '(1))))
+  (is (vector? (to-vector [])))
+  (is (vector? (to-vector [1])))
+  (is (vector? (to-vector {:foo "bar"})))
+  (is (vector? (to-vector [{:foo "bar"}])))
+  (is (vector? (to-vector #{1 2})))
+  (is (vector? (to-vector [#{1 2}]))))
+
+(deftest to-list-test
+  (is (= nil (to-list nil)))
+  (is (list? (to-list 1)))
+  (is (list? (to-list '())))
+  (is (list? (to-list '(1))))
+  (is (list? (to-list [])))
+  (is (list? (to-list [1])))
+  (is (list? (to-list {:foo "bar"})))
+  (is (list? (to-list [{:foo "bar"}])))
+  (is (list? (to-list #{1 2})))
+  (is (list? (to-list [#{1 2}]))))
+
+(deftest to-sequence-test
+  (is (= nil       (to-sequence nil)))
+  (is (sequential? (to-sequence 1)))
+  (is (sequential? (to-sequence '())))
+  (is (sequential? (to-sequence '(1))))
+  (is (sequential? (to-sequence [])))
+  (is (sequential? (to-sequence [1])))
+  (is (sequential? (to-sequence {:foo "bar"})))
+  (is (sequential? (to-sequence [{:foo "bar"}])))
+  (is (sequential? (to-sequence #{1 2})))
+  (is (sequential? (to-sequence [#{1 2}]))))
+
 (deftest sequential!-test
-  (is (= nil (sequential! nil)))
+  (is (= nil       (sequential! nil)))
   (is (sequential? (sequential! 1)))
   (is (sequential? (sequential! '())))
   (is (sequential? (sequential! '(1))))

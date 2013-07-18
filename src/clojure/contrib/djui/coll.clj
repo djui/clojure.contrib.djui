@@ -70,11 +70,31 @@
     (when-not (next coll)
       (first coll))))
 
-(defn sequential!
-  "Ensure x is sequential. If x is nil, nil is returned."
-  {:added "1.7"}
+(defn to-vector
+  "Like vector, but (to-vector nil) returns nil."
+  {:added "1.8"}
+  [x]
+  (if (or (nil? x) (vector? x)) x (vector x)))
+
+(defn to-list
+  "Like list, but (to-list nil) returns nil."
+  {:added "1.8"}
+  [x]
+  (if (or (nil? x) (list? x)) x (list x)))
+
+(defn to-sequence
+  "Like sequence, but (to-sequence nil) returns nil."
+  {:added "1.8"}
   [x]
   (if (or (nil? x) (sequential? x)) x (list x)))
+
+(defn sequential!
+  "Ensure x is sequential. If x is nil, nil is returned.
+  Deprecated, use to-sequence instead."
+  {:added "1.7"
+   :deprecated "1.8"}
+  [x]
+  (to-sequence x))
 
 (defn any?
   "Returns a boolean representing if any value in coll is true. If pred is
