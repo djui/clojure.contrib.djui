@@ -1,8 +1,15 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "String helper functions."}
   clojure.contrib.djui.str
+  (:import java.util.UUID)
   (:require [clojure.edn :as edn]))
 
+
+(defn uuid
+  "Create a UUID string."
+  {:added "2.0"}
+  []
+  (.toString (UUID/randomUUID)))
 
 (defn safe-parse
   "Parse a clojure term without evaluating anything.
