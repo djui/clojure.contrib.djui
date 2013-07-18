@@ -7,7 +7,7 @@
 
 (defn uuid
   "Create a UUID string."
-  {:added "2.0"}
+  {:added "1.10"}
   []
   (.toString (UUID/randomUUID)))
 

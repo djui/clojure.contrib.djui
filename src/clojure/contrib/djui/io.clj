@@ -10,7 +10,7 @@
 
 (defn read-file
   "Read content of filename and parse it using edn. Empty files return nil."
-  {:added "2.0"}
+  {:added "1.10"}
   [filename]
   (with-open [r (PushbackReader. (reader filename))]
     (try (edn/read r)
@@ -21,7 +21,7 @@
 (defn tempfile
   "Create a tempfile and return the filepath. The file will be deleted when then
   VM terminates normally."
-  {:added "2.0"}
+  {:added "1.10"}
   ([] (tempfile "temp" ""))
   ([name ext]
      (let [file (File/createTempFile name ext)]
