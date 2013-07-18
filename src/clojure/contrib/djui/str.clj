@@ -1,5 +1,6 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "String helper functions."}
+  (:require [clojure.edn] :as edn)
   clojure.contrib.djui.str)
 
 
@@ -7,4 +8,4 @@
   "Parse a clojure term without evaluating anything."
   {:added "1.4"}
   [str]
-  (binding [*read-eval* false] (read-string str)))
+  (clojure.edn/read-string str))
