@@ -7,7 +7,8 @@
 
 (defn uuid
   "Create a UUID string."
-  {:added "1.10"}
+  {:added "1.10"
+   :io? true}
   []
   (.toString (UUID/randomUUID)))
 
@@ -15,6 +16,7 @@
   "Parse a clojure term without evaluating anything.
   Deprecated: Use clojure.edn/read-string instead."
   {:added "1.4"
-   :deprecated "2.0"}
+   :deprecated "2.0"
+   :io? true}
   [str]
   (edn/read-string str))

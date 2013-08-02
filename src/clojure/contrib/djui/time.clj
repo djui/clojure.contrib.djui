@@ -6,7 +6,8 @@
 (defn bench
   "Returns the execution time, measured in msec, of f. If n is given,
   returns the execution time of running f n-times."
-  {:added "1.0"}
+  {:added "1.0"
+   :io? true}
   ([f]
      (bench 1 f))
   ([n f]
