@@ -154,3 +154,12 @@
        (catch Throwable t#
          (.printStackTrace t#)
          (throw t#)))))
+
+;; Courtesy https://github.com/amalloy/amalloy-utils/blob/master/src/amalloy/utils/debug.clj
+(defmacro ?
+  "Print form alongside with its result and return result."
+  {:added "1.11"}
+  [body]
+  `(let [res# ~body]
+     (prn '~body '~'is res#)
+     res#))

@@ -10,5 +10,5 @@ Library of helper functions as extension to `clojure` in the spirit of
 * Rich Hickey (Clojure)
 * Christophe Grand (Parsley)
 * Edward Tsech (And-let)
-* Alan Malloy (Useful)
+* Alan Malloy (Useful, Amalloy-Utils)
 * Stuart Halloway (Simulant)
