@@ -65,3 +65,5 @@
 (deftest unless-test
   (is (true? (unless false true)))
   (is (nil? (unless true (throw (Exception. "foo"))))))
+
+#_(deftest logged-future-test ...)

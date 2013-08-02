@@ -142,3 +142,15 @@
   {:added "1.5"}
   [test body]
   `(if (not ~test) ~body))
+
+;; Courtesy https://github.com/Datomic/simulant/blob/master/src/simulant/util.clj
+(defmacro logged-future
+  "Future with logging of failure."
+  {:added "1.11"}
+  [& body]
+  `(future
+     (try
+       ~@body
+       (catch Throwable t#
+         (.printStackTrace t#)
+         (throw t#)))))
