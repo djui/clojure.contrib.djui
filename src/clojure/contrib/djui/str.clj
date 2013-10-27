@@ -20,3 +20,10 @@
    :io? true}
   [str]
   (edn/read-string str))
+
+(defn as-long
+  "Parse a string as long."
+  {:added "1.11"}
+  [s]
+  (when (string? s)
+    (Long/parseLong s)))

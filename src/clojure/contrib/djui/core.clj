@@ -45,6 +45,14 @@
   ([x pre f] (when (pre x) (f x)))
   ([x pre f post] (when (pre x) (keep-if (f x) post))))
 
+(defn pre-cond
+  "Verify that applying val and args to fn is logically true and return val
+  other nil."
+  {:added "1.11"}
+  [val fn & args]
+  (when (apply fn (cons val args))
+    val))
+
 (defn verify
   "Verify that (test-f x) is true and return x, otherwise return (f x).
 

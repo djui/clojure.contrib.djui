@@ -1,6 +1,8 @@
 (ns ^{:author "Uwe Dauernheim <uwe@dauernheim.net>"
       :doc "Collection helper functions."}
-  clojure.contrib.djui.coll)
+  clojure.contrib.djui.coll
+  (:require [clojure.string :as string]
+            [clojure.walk   :as walk]))
 
 
 ;;; Maps
@@ -82,6 +84,24 @@
                 (apply merge-with m vals)
                 (apply f vals))))]
     (apply m vals)))
+
+(defn keywordize
+  "Like keyword, but also converting underscore and dots to dashes."
+  {:added "1.11"}
+  [s]
+  (-> (string/lower-case s)
+      (string/replace "_" "-")
+      (string/replace "." "-")
+      (keyword)))
+
+(defn keywordize-keys
+  "Like clojure.walk/keywordize-keys but also converting underscore and dots to
+  dashes."
+  {:added "1.11"}
+  [m]
+  (let [f (fn [[k v]] (if (string? k) [(keywordize k) v] [k v]))]
+    (walk/postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m)))
+
 
 ;;; Sequentials
 
