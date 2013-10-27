@@ -60,6 +60,7 @@
               (lazy-seq (step xs seen))))]
     (lazy-step coll #{})))
 
+;; Don't apply deep-merge with `(fn [x y] y)` as f for better performance.
 (defn deep-merge
   "Like merge, but merges maps recursively. If vals are not maps, the last value
   wins."
@@ -69,6 +70,7 @@
     (apply merge-with deep-merge vals)
     (last vals)))
 
+;; Courtesy https://github.com/richhickey/clojure-contrib/blob/2ede388a9267d175bfaa7781ee9d57532eb4f20f/src/main/clojure/clojure/contrib/map_utils.clj
 (defn deep-merge-with
   "Like merge-with, but merges maps recursively. If vals are not maps,
   (apply f vals) determines the winner."
@@ -159,6 +161,7 @@
 
 (defn pjuxt
   "Like juxt, but parallelized."
+  {:added "1.10"}
   [& fns]
   (fn [& args] (pmap #(apply % args) fns)))
 
