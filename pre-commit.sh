@@ -48,14 +48,11 @@ _checkCode() {
         exit 1
     fi
 
-    _warn "Do all functions have tests?"
-
     _success "Code check passed."
 }
 
 _checkDocumentation() {
-    # Check if version information is updated
-    # in metadata (:added, :deprecated, :io, :pure, ...) and project.clj
+    # Check if metadata (:added, :deprecated, :io, :pure, ...) is accurate
 
     _success "Documentation check passed."
 }

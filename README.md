@@ -12,6 +12,7 @@ you commit or push.
 
 ```sh
 ln -s ../../pre-commit.sh .git/hooks/pre-commit
+ln -s ../../pre-push.sh .git/hooks/pre-push
 ```
 
 # Courtesy
