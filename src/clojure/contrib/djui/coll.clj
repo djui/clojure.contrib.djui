@@ -102,24 +102,16 @@
   (let [f (fn [[k v]] (if (string? k) [(keywordize k) v] [k v]))]
     (walk/postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m)))
 
-
-(defn- assoc-in' [m [k & ks] v]
-  (if ks
-    (let [v1 (k m)
-          v2 (when (associative? v1) v1)]
-      (assoc m k (assoc-in' v2 ks v)))
-    (assoc m k v)))
+(defn- str-keys-to-map
+  [[k v]]
+  (assoc-in {} (map keyword (string/split k #"[\._]")) v))
 
 (defn deep-keywordize-keys
   "Take a hash map with keys as string and create a nested hash map splitting
   the string by dots and underscores as nesting structure."
   {:added "1.11"}
   [m]
-  (letfn [(splitter [m k v]
-            (let [keys (map keyword (string/split k #"[\._]"))
-                  val (if (map? v) (deep-keywordize-keys v) v)]
-              (assoc-in' m keys val)))]
-    (reduce-kv splitter {} m)))
+  (->> m (map str-keys-to-map) (apply deep-merge)))
 
 
 ;;; Sequentials
