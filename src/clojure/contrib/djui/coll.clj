@@ -104,7 +104,8 @@
 
 (defn- str-keys-to-map
   [[k v]]
-  (assoc-in {} (map keyword (string/split k #"[\._]")) v))
+  (let [ks (map keyword (filter not-empty (string/split k #"[\._]")))]
+    (when-not (empty? ks) (assoc-in {} ks v))))
 
 (defn deep-keywordize-keys
   "Take a hash map with keys as string and create a nested hash map splitting
