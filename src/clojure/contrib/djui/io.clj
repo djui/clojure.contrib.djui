@@ -3,21 +3,26 @@
   clojure.contrib.djui.io
   (:import [java.io File PushbackReader])
   (:require [clojure.edn :as edn]
-            [clojure.java.io :refer [reader]]))
+            [clojure.java.io :as io]))
 
 
 ;; File
 
 (defn read-file
-  "Read content of filename and parse it using edn. Empty files return nil."
+  "Read content of file-path and parse it using edn. Empty files return nil."
   {:added "1.10"
    :io? true}
-  [filename]
-  (with-open [r (PushbackReader. (reader filename))]
-    (try (edn/read r)
-         (catch java.lang.RuntimeException e
-           (when (not= (.getMessage e) "EOF while reading")
-             (throw e))))))
+  [file-path]
+  (with-open [reader (PushbackReader. (io/reader file-path))]
+    (edn/read {:eof nil} reader)))
+
+(defn read-resource-file
+  "Read content of file-path as resource and parse it using edn. Empty and
+  non-existing resources return nil."
+  {:added "1.11"
+   :io? true}
+  [file-path]
+  (read-file (io/resource file-path)))
 
 (defn tempfile
   "Create a tempfile and return the filepath. The file will be deleted when then
